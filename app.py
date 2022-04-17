@@ -25,11 +25,11 @@ argparser.add_argument(
 
 @app.get("/helloworld")
 def get_countries():
-    name = request.args.get("name", default="helloStranger", type=str)
+    name = request.args.get("name", default="Stranger", type=str)
     split_name = re.sub(
         "([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", name)
     ).split()
-    return " ".join(split_name)
+    return "Hello " + " ".join(split_name) + "\n"
 
 
 @app.get("/versionz")
@@ -56,4 +56,5 @@ def main(args):
 
 if __name__ == "__main__":
     args = vars(argparser.parse_args())
+    main(args)
     sys.exit(0)
