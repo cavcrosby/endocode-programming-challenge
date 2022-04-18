@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 from flask import Flask, request, jsonify
+import logging
 import os
 import re
 import sys
@@ -9,6 +10,16 @@ PORT_OPT = "p"
 PORT_LONG_OPT = "port"
 PORT_ENV_VAR_NAME = "HTTP_PORT"
 
+# logging configurations
+logging.basicConfig(level=logging.DEBUG, filemode="w")
+logger = logging.getLogger(__name__)
+
+f_handler = logging.FileHandler("log.txt")
+f_handler.setFormatter(logging.Formatter("%(asctime)s - %(message)s"))
+
+logger.addHandler(f_handler)
+
+# app and cli flags
 app = Flask(__name__)
 argparser = argparse.ArgumentParser(
     description=("Run http server"),
@@ -24,7 +35,8 @@ argparser.add_argument(
 
 
 @app.get("/helloworld")
-def get_countries():
+def hello_world():
+    logger.debug(f"{request.method} - {request.url}")
     name = request.args.get("name", default="Stranger", type=str)
     split_name = re.sub(
         "([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", name)
@@ -33,7 +45,8 @@ def get_countries():
 
 
 @app.get("/versionz")
-def add_country():
+def versionz():
+    logger.debug(f"{request.method} - {request.url}")
     return jsonify(
         [
             {"git_commit_hash": os.getenv("GIT_HASH")},
