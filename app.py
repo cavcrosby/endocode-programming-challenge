@@ -38,6 +38,7 @@ argparser.add_argument(
 def hello_world():
     logger.debug(f"{request.method} - {request.url}")
     name = request.args.get("name", default="Stranger", type=str)
+    # https://stackoverflow.com/questions/29916065/how-to-do-camelcase-split-in-python#answer-37697078
     split_name = re.sub(
         "([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", name)
     ).split()
