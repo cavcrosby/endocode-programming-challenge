@@ -22,3 +22,8 @@ run:
 .PHONY: test
 test:
 	@${SHELL} tests.sh
+
+.PHONY: clean
+clean:
+	rm --force ./log.txt
+	rm --recursive --force ./__pycache__
