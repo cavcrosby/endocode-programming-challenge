@@ -29,7 +29,7 @@ argparser = argparse.ArgumentParser(
 argparser.add_argument(
     f"-{PORT_OPT}",
     f"--{PORT_LONG_OPT}",
-    default="8080",
+    default=os.getenv("APP_PORT"),
     help="port to list on",
 )
 
